@@ -3,13 +3,6 @@ use CGI;
 use strict;
 
 if (-e "./pwd") {
-    print "Content-type:text/html\r\n\r\n";
-    print "<html lang=\"en\"><meta charset=\"utf-8\">\n";
-    print "<head>\n";
-    print "<title>Blog.DocSec.EU</title>\n";
-    print "</head>\n<body><h2><a href=\"?\" style=\"text-decoration:none;color:black\">Blog</a></h2>";
-    print "<b>Security, Documents ... and Secure Documents</b>\n";
-    print "<p style=\"text-align:right\"><a href=\"mailto:blog\@docsec.eu\">Send feedback!</a><p>\n";
     my $cgi = new CGI();
     my $maxtime = 2147483647;
     my $time_now = time();
@@ -41,6 +34,7 @@ if (-e "./pwd") {
  	my $pwd=$cgi->param("a");
 	if ($pwd ==$realpasswd) {
 		$linkstr = "a=$pwd&";
+		HTMLIntro ($linkstr);
 		print "<h1>Welcome, Admin! <a href=\"?".$linkstr."e=New\"> create new logentry</a></h3>";
 		my $entry="";
 		if ($cgi->param('e')) {   #### insert entry
@@ -84,9 +78,10 @@ if (-e "./pwd") {
     	if ($mday <10) {
                 $mday = "0".$mday;
     	}
+	HTMLIntro ("");
 	ListEntryPlus ("./$this_year/$mon/$mday/", 0,$ts,$linkstr);
     } else {
-
+	HTMLIntro ("");
        	ListBlog ($this_year, $mon, $linkstr);
     }
 } else { #### No pwd file
@@ -94,6 +89,17 @@ if (-e "./pwd") {
 	exit;
 }
 
+sub HTMLIntro {
+    my $linkstr = shift;
+    print "Content-type:text/html\r\n\r\n";
+    print "<html lang=\"en\"><meta charset=\"utf-8\">\n";
+    print "<head>\n";
+    print "<title>Blog.DocSec.EU</title>\n";
+    print "</head>\n<body><h2><a href=\"?$linkstr\" style=\"text-decoration:none;color:black\">Blog.DocSec.eu</a></h2>";
+    print "<b>Security, Documents ... and Secure Documents</b>\n";
+    print "<p style=\"text-align:right\"><a href=\"mailto:blog\@docsec.eu\">Send
+ feedback!</a><p>\n";
+}
 sub TimeStamp {
     my $timestamp = shift;
     my $maxtime = 2147483647;
@@ -105,12 +111,12 @@ sub TimeStamp {
 sub DateStamp {
     my $timestamp = shift;
     my $maxtime = 2147483647;
-    my @months = qw( Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec );
-    my @days = qw(Sun Mon Tue Wed Thu Fri Sat Sun);
+    my @months = qw( January February March April May June July August September October November December );
+    my @days = qw(Sunday Monday Tuesday Wednesday Thursday Friday Saturday Sundae);
     my $time_n = $maxtime - hex($timestamp);
     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($time_n);
     my $this_year = 1900+ $year;
-    return ("$days[$wday] $months[$mon] $mday $this_year");
+    return ("$days[$wday], $mday. of $months[$mon], $this_year");
 
 }
 sub ListEntry {
