@@ -116,6 +116,15 @@ sub TimeStamp {
     my $maxtime = 2147483647;
     my $time_n = $maxtime - hex($timestamp);
     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($time_n);
+    if ($hour < 10) {
+	$hour = "0".$hour;
+    }
+    if ($min < 10) {
+	$min = "0".$min;
+    }
+    if ($sec < 10) {
+    	$sec="0".$sec;
+     }
     return ("$hour:$min.$sec");
 }
 
