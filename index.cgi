@@ -58,7 +58,7 @@ if (-e "./pwd") {
 			if ($cgi->param('d')) {
 				my $delete = $cgi->param('d');
 				if ($delete == $ts) {
-					exec ("find -name $ts -delete") or die "ERROR deleting log entry";
+					exec ("find -name $ts -delete");
 					ListBlog ($this_year, $mon, $linkstr);	
 				}
 			} else {
