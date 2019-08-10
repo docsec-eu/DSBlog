@@ -51,10 +51,10 @@ if (-e "./pwd") {
                         open (LOGENTRY, ">$this_year/$mon/$mday/$ts") or die "Could not open file $!";
                     	print LOGENTRY $entry;
                     	close (LOGENTRY);
-           		Edit ($this_year,$mon,$mday,$ts);
+           		Edit ($this_year,$mon,$mday,$ts,$linkstr,$pwd);
 		}
 		if ($cgi->param('ts')) {
-			Edit ($this_year,$mon,$mday,$ts);	
+			Edit ($this_year,$mon,$mday,$ts,$linkstr,$pwd);	
 		}
 		ListBlog ($this_year, $mon, $linkstr);	
 	} else { ## Not authorized 
@@ -88,6 +88,8 @@ sub Edit {
 	my $mon = shift;
 	my $mday = shift;
 	my $ts = shift;
+	my $linkstr = shift;
+	my $pwd = shift;
 	print "<h2>".DateStamp ($ts)."</h2>";
         print "<ul><li><a href=\"/?".$linkstr."ts=$ts\">[l]</a>";
         ListEntry ("$this_year/$mon/$mday/$ts", 0);
