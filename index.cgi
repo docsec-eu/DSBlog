@@ -58,6 +58,7 @@ if (-e "./pwd") {
 			if ($cgi->param('d')) {
 				my $delete = $cgi->param('d');
 				if ($delete == $ts) {
+					print "ty $this_year  m $mon";
 					exec ("find -name $ts -delete");
 					print "ty $this_year  m $mon";
 					ListBlog ($this_year, $mon, $linkstr);	
