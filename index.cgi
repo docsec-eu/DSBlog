@@ -51,16 +51,10 @@ if (-e "./pwd") {
                         open (LOGENTRY, ">$this_year/$mon/$mday/$ts") or die "Could not open file $!";
                     	print LOGENTRY $entry;
                     	close (LOGENTRY);
+           		Edit ($this_year,$mon,$mday,$ts);
 		}
 		if ($cgi->param('ts')) {
-		        print "<h2>".DateStamp ($ts)."</h2>";
-			print "<ul><li><a href=\"/?".$linkstr."ts=$ts\">[l]</a> ";
-			ListEntry ("$this_year/$mon/$mday/$ts", 0);
-   			print "</ul><h3>Edit:</h3><form action=\"/\" method=\"POST\"><textarea cols=\"80\" rows=\"10\" name=\"e\">";
-			ListEntry ("$this_year/$mon/$mday/$ts", 0);		
-			print "</textarea><br/><input type=\"hidden\" value=\"$pwd\" name=\"a\">";
-			print "<input type=\"hidden\" value=\"$ts\" name=\"ts\">";
-			print "<input type=\"submit\" value=\"Submit\"></form>";
+			Edit ($this_year,$mon,$mday,$ts);	
 		}
 		ListBlog ($this_year, $mon, $linkstr);	
 	} else { ## Not authorized 
@@ -88,6 +82,20 @@ if (-e "./pwd") {
 } else { #### No pwd file
 	print "Content-type:text/html\r\n\r\n<html lang=\"en\"><meta charset=\"utf-8\">\n<body><h2>This blog seems unconfigured, please contact the administrator!</h2></body></html>";
 	exit;
+}
+sub Edit {
+	my $this_year = shift;
+	my $mon = shift;
+	my $mday = shift;
+	my $ts = shift;
+	print "<h2>".DateStamp ($ts)."</h2>";
+        print "<ul><li><a href=\"/?".$linkstr."ts=$ts\">[l]</a>";
+        ListEntry ("$this_year/$mon/$mday/$ts", 0);
+        print "</ul><h3>Edit:</h3><form action=\"/\" method=\"POST\"><textarea cols=\"80\" rows=\"10\" name=\"e\">";
+        ListEntry ("$this_year/$mon/$mday/$ts", 0);
+        print "</textarea><br/><input type=\"hidden\" value=\"$pwd\" name=\"a\">";
+        print "<input type=\"hidden\" value=\"$ts\" name=\"ts\">";
+        print "<input type=\"submit\" value=\"Submit\"></form>";
 }
 
 sub HTMLIntro {
