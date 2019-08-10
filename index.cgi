@@ -54,7 +54,15 @@ if (-e "./pwd") {
            		Edit ($this_year,$mon,$mday,$ts,$linkstr,$pwd);
 		}
 		if ($cgi->param('ts')) {
-			Edit ($this_year,$mon,$mday,$ts,$linkstr,$pwd);	
+			my $ts=$cgi->param('ts');
+			if ($cgi->param('d')) {
+				my $delete = $cgi->param('d');
+				if ($delete == $ts) {
+					exec ("find -name $ts -delete") or die "ERROR deleting log entry";
+				}
+			} else {
+				Edit ($this_year,$mon,$mday,$ts,$linkstr,$pwd);	
+			}
 		}
 		ListBlog ($this_year, $mon, $linkstr);	
 	} else { ## Not authorized 
@@ -93,7 +101,12 @@ sub Edit {
 	print "<h2>".DateStamp ($ts)."</h2>";
         print "<ul><li><a href=\"/?".$linkstr."ts=$ts\">[l]</a>";
         ListEntry ("$this_year/$mon/$mday/$ts", 0);
-        print "</ul><h3>Edit:</h3><form action=\"/\" method=\"POST\"><textarea cols=\"80\" rows=\"10\" name=\"e\">";
+        print "</ul><h3>Edit:</h3><form action=\"/\" method=\"POST\">
+<input type=\"hidden\" value=\"$ts\" name=\"ts\">
+<input type=\"hidden\" value=\"$ts\" name=\"d\">
+<input type=\"hidden\" value=\"$pwd\" name=\"a\">
+<input type=\"submit\" value=\"DELETE ENTRY\"><br></form>
+<form action=\"/\" method=\"POST\"><textarea cols=\"80\" rows=\"10\" name=\"e\">";
         ListEntry ("$this_year/$mon/$mday/$ts", 0);
         print "</textarea><br/><input type=\"hidden\" value=\"$pwd\" name=\"a\">";
         print "<input type=\"hidden\" value=\"$ts\" name=\"ts\">";
