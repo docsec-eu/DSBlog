@@ -9,7 +9,7 @@ if (-e "./pwd") {
     print "<title>Blog.DocSec.EU</title>\n";
     print "</head>\n<body><h2><a href=\"?\" style=\"text-decoration:none;color:black\">Blog</a></h2>";
     print "<b>Security, Documents ... and Secure Documents</b>\n";
-    print "<p style=\"text-align:right\"><a href=\"mailto:blog@docsec.eu\">Send feedback!</a><p>\n";
+    print "<p style=\"text-align:right\"><a href=\"mailto:blog\@docsec.eu\">Send feedback!</a><p>\n";
     my $cgi = new CGI();
     my $maxtime = 2147483647;
     my $time_now = time();
