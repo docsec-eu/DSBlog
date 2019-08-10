@@ -62,6 +62,7 @@ if (-e "./pwd") {
 			print "<input type=\"hidden\" value=\"$ts\" name=\"ts\">";
 			print "<input type=\"submit\" value=\"Submit\"></form>";
 		}
+		ListBlog ($this_year, $mon, $linkstr);	
 	} else { ## Not authorized 
 	} 
     }
