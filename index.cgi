@@ -72,6 +72,7 @@ if (-e "./pwd") {
     }
     elsif ($cgi->param('ts')) {
 	my $ts = $cgi->param('ts');
+        HTMLIntro ($linkstr);
 	print "<h2>".DateStamp($ts)."</h2><ul>";	
 	my $maxtime = 2147483647;
     	my $time_n = $maxtime - hex($ts);
