@@ -84,7 +84,6 @@ if (-e "./pwd") {
     	if ($mday <10) {
                 $mday = "0".$mday;
     	}
-	HTMLIntro ("");
 	ListEntryPlus ("./$this_year/$mon/$mday/", 0,$ts,$linkstr);
     } else {
 	HTMLIntro ("");
